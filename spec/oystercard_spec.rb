@@ -24,18 +24,6 @@ describe Oystercard do
     expect{subject.top_up(80)}.to raise_error "Balance limit is £90"
   end
 
-  it "card with £50 should reduce to £40 when £10 is spent" do
-    subject.top_up(50)
-    expect(subject.deduct(10)).to eq(40)
-  end
-
-  it "card with £60 should reduce to £0 when £60 is spent" do
-    subject.top_up(60)
-    expect(subject.deduct(60)).to eq(0)
-  end
-
-
-
   it "when card touch_out card status in_journey is false" do
     expect(subject.touch_out).to eq (false)
   end
@@ -55,7 +43,15 @@ describe Oystercard do
 
     context "not enough money" do
       it "raises and error when touching in" do
-        expect{subject.touch_in}.to raise_error "balance too low"
+        expect { subject.touch_in }.to raise_error "balance too low"
+      end
+    end
+  end
+
+  describe ".touch_out" do
+    context "enough money on card" do
+      it "deduct min journey fair" do
+        expect { subject.touch_out }.to change {subject.balance}.by(-1)
       end
     end
   end

@@ -12,15 +12,11 @@ class Oystercard
 
   def top_up(value)
     check_limit(value)
-    @balance = value + @balance
+    @balance += value
   end
 
   def check_limit(value)
     raise "Balance limit is £#{BALANCE_LIMIT}" if value + @balance > BALANCE_LIMIT
-  end
-
-  def deduct(value)
-    @balance = @balance - value
   end
 
   def touch_in
@@ -31,10 +27,16 @@ class Oystercard
   end
 
   def touch_out
+    deduct(MINIMUM_BALANCE)
     @in_journey = false
   end
 
   def in_journey?
     @in_journey
+  end
+
+  private
+  def deduct(value)
+    @balance -= value
   end
 end
