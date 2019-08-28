@@ -25,20 +25,27 @@ describe Oystercard do
   end
 
   it "when card touch_out card status in_journey is false" do
-    expect(subject.touch_out).to eq (false)
+    subject.touch_out
+    expect(subject).not_to be_in_journey
   end
 
   it "in journey should be true when you are in journey" do
     subject.top_up(10)
     subject.touch_in
-    expect(subject.in_journey?).to eq (true)
+    expect(subject).to be_in_journey
   end
 
   describe ".touch_in" do
-
-    it "card status is in_journey" do
-      subject.top_up(10)
-      expect(subject.touch_in).to eq (true)
+    context "enough money" do
+      before { subject.top_up(10) }
+      it "card status is in_journey" do
+        subject.touch_in
+        expect(subject).to be_in_journey
+      end
+      it "saving entry station" do
+        subject.touch_in("here")
+        expect(subject.entry_station).to eq("here")
+      end
     end
 
     context "not enough money" do
@@ -55,6 +62,8 @@ describe Oystercard do
       end
     end
   end
+
+
 end
 
 
