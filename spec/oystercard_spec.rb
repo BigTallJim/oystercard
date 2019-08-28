@@ -41,21 +41,24 @@ describe Oystercard do
   end
 
   it "in journey should be true when you are in journey" do
+    subject.top_up(10)
     subject.touch_in
     expect(subject.in_journey?).to eq (true)
   end
 
   describe ".touch_in" do
+
     it "card status is in_journey" do
+      subject.top_up(10)
       expect(subject.touch_in).to eq (true)
     end
+
     context "not enough money" do
       it "raises and error when touching in" do
-      expect{subject.touch_in}.to raise_error("balance too low")
-    end
+        expect{subject.touch_in}.to raise_error "balance too low"
+      end
     end
   end
-
 end
 
 
