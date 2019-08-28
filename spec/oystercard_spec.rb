@@ -80,7 +80,7 @@ describe Oystercard do
     subject.top_up(50)
     subject.touch_in(station)
     subject.touch_out(station2)
-    expect(subject.journey).to eq({entry: station, exit: station2})
+    expect(subject.journeys).to eq([{entry: station, exit: station2}])
   end
 
 

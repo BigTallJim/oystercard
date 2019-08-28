@@ -35,6 +35,7 @@ class Oystercard
     deduct(MINIMUM_BALANCE)
     @entry_station = nil
     @journey[:exit] = station
+    save_journey
   end
 
   def in_journey?
@@ -44,5 +45,10 @@ class Oystercard
   private
   def deduct(value)
     @balance -= value
+  end
+
+  def save_journey
+    @journeys << @journey
+    @journey = {entry: nil, exit: nil}
   end
 end
