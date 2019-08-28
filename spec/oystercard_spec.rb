@@ -35,9 +35,17 @@ describe Oystercard do
   end
 
   it "when card touch_in card status is in_journey" do
-    expect(subject.touch_in).to eq (subject.in_journey)
+    expect(subject.touch_in).to eq (true)
   end
 
+  it "when card touch_out card status in_journey is false" do
+    expect(subject.touch_out).to eq (false)
+  end
+
+  it "in journey should be true when you are in journey" do
+    subject.touch_in
+    expect(subject.in_journey?).to eq (true)
+  end
 
 end
 
