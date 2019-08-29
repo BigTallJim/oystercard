@@ -34,7 +34,7 @@ class Oystercard
 
   def touch_out(station)
     deduct(MINIMUM_BALANCE)
-    @journey.exit_station = station
+    @journey.finish(station)
     save_journey
   end
 
