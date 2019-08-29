@@ -1,5 +1,6 @@
 require 'oystercard'
 
+
 describe Oystercard do
 
   let(:station) { double(:station) }
@@ -8,7 +9,7 @@ describe Oystercard do
   it { is_expected.to respond_to(:journey) }
 
   it "Check that the journey variable exists" do
-    expect(subject.journey).to be_instance_of(Hash)
+    expect(subject.journey).to be_instance_of(Journey)
   end
 
   it "Check that the journeys variable is empty" do
@@ -57,7 +58,7 @@ describe Oystercard do
       end
       it "saving entry station" do
         subject.touch_in(station)
-        expect(subject.entry_station).to eq(station)
+        expect(subject.journey.entry_station).to eq(station)
       end
     end
 
@@ -76,11 +77,12 @@ describe Oystercard do
     end
   end
 
-  it "adds entry and exit stations to hash" do
+  it "stores entry and exit stations in a Journey class" do
     subject.top_up(50)
     subject.touch_in(station)
     subject.touch_out(station2)
-    expect(subject.journeys).to eq([{entry: station, exit: station2}])
+
+    expect(subject.journeys).to eq([subject.journey])
   end
 
 
